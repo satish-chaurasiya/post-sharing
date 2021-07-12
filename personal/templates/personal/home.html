@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style type="text/css">
+	@media (max-width: 768px) {
+		.right-column {
+			margin-left: 0px;
+		}
+	}
+
+	@media (min-width: 768px) {
+		.right-column {
+			margin-left: 20px;
+		}
+	}
+
+	.blog-post-container {
+		margin-bottom: 20px;
+		width: 100%;
+	}
+
+	.create-post-bar {
+		background-color: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+		margin-bottom: 20px;
+	}
+
+	.left-column {
+		padding: 0px;
+	}
+
+	.right-column {
+		padding: 0px;
+	}
+
+	.lead {
+		font-size: 17px;
+	}
+
+	body {
+		background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
+	}
+
+    
+	.btn-grad {background-image: linear-gradient(to right, #1c92d2 0%, #f2fcfe  51%, #1c92d2  100%)}
+         .btn-grad {
+            margin: 10px;
+            padding: 15px 45px;
+            text-align: center;
+            text-transform: uppercase;
+            transition: 0.5s;
+            background-size: 200% auto;
+            color: white;            
+            box-shadow: 0 0 20px #eee;
+            border-radius: 10px;
+            display: block;
+          }
+
+          .btn-grad:hover {
+            background-position: right center; /* change the direction of the change here */
+            color: #fff;
+            text-decoration: none;
+          }
+         
+</style>
+
+<div class="container">
+<!-- main content -->
+
+	<div class="row">
+
+		<!-- blog feed -->
+		<div class="left-column col-lg-7 offset-lg-1">
+
+			<!-- Top 'create post' bar -->
+			<div class="d-lg-none mb-3">
+				<div class="card m-auto d-flex flex-column p-3">
+					<img class="img-fluid d-block m-auto pb-2" src="{% static 'create(logo).svg' %}" width="72"
+						height="72">
+					
+					<p class="m-auto"><a class="btn-grad" href="{% url 'blog:create' %}">Create Post</a></p>
+				</div>
+			</div>
+			<!-- end Top 'create post' bar -->
+
+			<!-- Blog posts-->
+			{% if blog_posts %}
+			{% for post in blog_posts %}
+			<div class="blog-post-container">
+				{% include 'blog/snippets/blog_post_snippet.html' with blog_post=post %}
+			</div>
+			{% endfor %}
+			{% else %}
+			<div class="blog-post-container">
+				{% include 'blog/snippets/blog_post_snippet.html' with query=query %}
+			</div>
+			{% endif %}
+			<!-- End Blog posts-->
+
+			<!-- Pagination -->
+			{% include 'blog/snippets/blog_post_pagination.html' with blog_posts=blog_posts %}
+
+		</div>
+		<!-- end blog feed -->
+
+
+		<!-- Right 'create post' column  -->
+		<div class="right-column col-lg-3 d-lg-flex d-none flex-column">
+
+			<div class="card create-post-bar d-flex flex-column p-3">
+				<img class="img-fluid d-block m-auto pb-2" src="{% static 'create(logo).svg' %}" width="72"
+					height="72">
+				
+				<p class="m-auto"><a class="btn-grad" href="{% url 'blog:create' %}">Creat Post</a></p>
+			</div>
+
+		</div>
+		<!-- end Right 'create post' column  -->
+
+
+
+	</div>
+</div>
+
+{% endblock content %}
